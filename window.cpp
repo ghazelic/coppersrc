@@ -3,36 +3,33 @@
 
 int main()
 {
-	sf::Window window(sf::VideoMode({800, 600}), "Window", sf::Style::Close, sf::State::Windowed);
-	window.setVerticalSyncEnabled(true);
+   
+    sf::Window window(sf::VideoMode({800, 600}), "OpenGL", sf::Style::Default, sf::State::Windowed, sf::ContextSettings(32));
+    window.setVerticalSyncEnabled(true);
 
     
-    	window.setActive(true);
+    window.setActive(true);
 
     
-    	bool running = true;
-    	while (running)
-    	{
-        // handle events
-        	while (const std::optional event = window.pollEvent())
-        	{
-            		if (event->is<sf::Event::Closed>())
-            		{
-                // end the program
-                		running = false;
-            		}
-            		else if (const auto* resized = event->getIf<sf::Event::Resized>())
-            		{
-                // adjust the viewport when the window is resized
-                		glViewport(0, 0, resized->size.x, resized->size.y);
-            		}
-        	}
-
+    bool running = true;
+    while (running)
+    {
         
-        	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        	window.display();
-	}
+        while (const std::optional event = window.pollEvent())
+        {
+            if (event->is<sf::Event::Closed>())
+            {
+                
+                running = false;
+            }
+            else if (const auto* resized = event->getIf<sf::Event::Resized>())
+            {
+                
+                glViewport(0, 0, resized->size.x, resized->size.y);
+            }
+        }
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        window.display();
+    }
 
 }
-
-	
